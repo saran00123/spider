@@ -1,0 +1,1 @@
+Arduino controlled 2-joint 8-servo 4-legged Walking Robot by Tokyo_Bird on Thingiverse: https://www.thingiverse.com/thing:4905975

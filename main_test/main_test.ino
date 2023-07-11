@@ -1,5 +1,5 @@
-//#include <IRremote.h> // include IR Remote library
-#include <Servo.h>    // include servo library
+n //#include <IRremote.h> // include IR Remote library
+#include <ESP32Servo.h>    // include servo library
 
 
 //===== Globals ============================================================================
@@ -22,7 +22,7 @@
 #define mo_5 'u'
 #define zero ' '
 #define cfg_1 ','
-#define cfg_2 '.' 
+#define cfg_2 '.'
 #define repeat 'rpt'
 
 
@@ -47,7 +47,9 @@ int b0   = (0   + db),
     b30  = (30  + db),
     b40  = (40  + db),
     b60  = (60  + db),
-    b90  = (90  + db);
+    b90  = (90  + db),
+    b120 = (120 + db),
+    b140 = (140 + db);
 
 
 int c90  = (90  + dc),
@@ -96,14 +98,14 @@ Servo myServo8; // Front Right Pivot Servo
 void setup()
 {
   // Attach servos to Arduino Pins
-  myServo1.attach(0);
-  myServo2.attach(1);
-  myServo3.attach(2);
-  myServo4.attach(3);
-  myServo5.attach(4);
-  myServo6.attach(5);
-  myServo7.attach(6);
-  myServo8.attach(7);
+  myServo1.attach(13, 1000, 2000);
+  myServo2.attach(12, 1000, 2000);
+  myServo3.attach(14, 1000, 2000);
+  myServo4.attach(27, 1000, 2000);
+  myServo5.attach(26, 1000, 2000);
+  myServo6.attach(25, 1000, 2000);
+  myServo7.attach(33, 1000, 2000);
+  myServo8.attach(32, 1000, 2000);
 
   Serial.begin (9600);
 
@@ -115,12 +117,12 @@ void loop()
 {
   unsigned long value;
   unsigned long lastValue;
-  
+
   center_servos();  // Center all servos
   high = 15;        // Set hight to 15
   spd = 3;          // Set speed to 3
 
-  
+
   while (1 == 1)    // Loop forever
   {
     if (Serial.available()) // If we have received an IR signal
@@ -408,7 +410,9 @@ void forward()
   b30 = (30 + db),
   b40 = (40 + db),
   b60 = (60 + db),
-  b90 = (90 + db);
+  b90 = (90 + db),
+  b120 = (120 + db),
+  b140 = (140 + db);
 
 
   // Right Back Pivot
@@ -430,14 +434,14 @@ void forward()
   // set servo positions and speeds needed to walk forward one step
   // (LFP,  LBP, RBP,  RFP, LFL, LBL, RBL, RFL, S1, S2, S3, S4)
   srv(a180, b60,  c120, d60, 90,  33, 33, 42, 3,  1, 1, 1);
-  srv(a180,  b40, c90,  d40, 42, 33, 33, 42, 1,  1, 3, 1);
+  srv(a180, b40, c90,  d40, 120, 33, 33, 42, 1,  1, 3, 1);
   srv(a120, b30, c180, d30,  42, 33, 18, 42, 1,  1, 1, 3);
   srv(a120, b30, c180, d30,  42, 33, 33, 100,  1,  1, 1, 3);
   srv(a150, b90, c150, d100, 42, 33, 33, 42, 1,  3, 1, 1);
-  srv(a150, b90, c150, d100, 42, 100, 33, 42, 1,  3, 1, 1);
+  srv(a150, b90, c150, d100, 42, 33, 33, 42, 1,  3, 1, 1);
   srv(a180, b60,  c120, d60, 90, 33, 33, 42, 3,  1, 1, 1);
   srv(a180, b60,  c120, d60, 42,  33,  33,  42,  1,  3,  1,  1);
-  
+
 }
 
 
@@ -448,14 +452,14 @@ void back ()
 {
   // set servo positions and speeds needed to walk backward one step
   // (LFP,  LBP, RBP,  RFP, LFL, LBL, RBL, RFL, S1, S2, S3, S4)
-  srv(180, 0,  120, 60, 100, 33, 33, 42, 3,  1, 1, 1);
-  srv(150, 90, 150, 90, 42, 100, 33, 42, 1,  3, 1, 1);
-  srv(150, 90, 150, 90, 42, 33, 33, 42, 1,  3, 1, 1);
-  srv(120, 60, 180, 30,  42, 33, 33, 100,  1,  1, 1, 3);
-  srv(120, 60, 180, 30,  42, 33, 33, 42, 1,  1, 1, 3);
-  srv(90,  30, 90,  40, 42, 33, 18, 42, 1,  1, 3, 1);
-  srv(90,  30, 90,  40, 42, 33, 33, 42, 1,  1, 3, 1);
-  srv(150, 0,  120, 60, 42,  33, 33, 42, 3,  1, 1, 1);
+  srv(180, 0,  120, 60, 100, 42, 42, 42, 3,  1, 1, 1);
+  srv(150, 90, 150, 90, 42, 100, 42, 42, 1,  3, 1, 1);
+  srv(150, 90, 150, 90, 42, 42, 42, 42, 1,  3, 1, 1);
+  srv(120, 60, 180, 30,  42, 42, 42, 100,  1,  1, 1, 3);
+  srv(120, 60, 180, 30,  42, 42, 42, 42, 1,  1, 1, 3);
+  srv(90,  30, 90,  40, 42, 42, 18, 42, 1,  1, 3, 1);
+  srv(90,  30, 90,  40, 42, 42, 42, 42, 1,  1, 3, 1);
+  srv(150, 0,  120, 60, 42,  42, 42, 42, 3,  1, 1, 1);
 
 
 }
